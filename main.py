@@ -12,6 +12,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
 # Optional: add contact me email functionality (Day 60)
 # import smtplib
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 
 '''
@@ -29,7 +32,7 @@ This will install the packages from the requirements.txt for this project.
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+app.config['SECRET_KEY'] = os.getenv('get_secret_key')
 ckeditor = CKEditor(app)
 Bootstrap5(app)
 
@@ -44,19 +47,21 @@ def load_user(user_id):
 
 
 # For adding profile images to the comment section
-gravatar = Gravatar(app,
+gravatar = Gravatar(
+                    app,
                     size=100,
                     rating='g',
                     default='retro',
                     force_default=False,
                     force_lower=False,
                     use_ssl=False,
-                    base_url=None)
+                    base_url=None
+                    )
 
 # CREATE DATABASE
 class Base(DeclarativeBase):
     pass
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 
@@ -275,7 +280,7 @@ def contact():
     return render_template("contact.html", current_user=current_user)
 
 # Optional: You can include the email sending code from Day 60:
-# DON'T put your email and password here directly! The code will be visible when you upload to Github.
+# DON'T put your email and password here directly! The code will be visible when you upload to GitHub.
 # Use environment variables instead (Day 35)
 
 # MAIL_ADDRESS = os.environ.get("EMAIL_KEY")
@@ -298,5 +303,6 @@ def contact():
 #         connection.sendmail(MAIL_ADDRESS, MAIL_APP_PW, email_message)
 
 
+
 if __name__ == "__main__":
-    app.run(debug=True, port=5001)
+    app.run(debug=False, port=5001)
