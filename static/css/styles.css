@@ -10668,16 +10668,51 @@ footer {
   padding-bottom: 3rem;
 }
 
-header.masthead {
-  position: relative;
-  margin-bottom: 3rem;
-  padding-top: calc(8rem + 57px);
-  padding-bottom: 8rem;
-  background: no-repeat center center;
-  background-color: #6c757d;
-  background-size: cover;
-  background-attachment: scroll;
+.masthead {
+  background-color: white;
+  padding: 2rem 0;
 }
+
+.image-row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.image-box {
+  flex: 1;
+  max-width: 30%;
+  height: 300px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-color: white;
+  position: relative;
+}
+
+/* Push the center image up */
+.center-image {
+  transform: translateY(-100px); /* Adjust upward as needed */
+  z-index: 1;
+}
+
+/* Overlay text inside the center image */
+.text-overlay {
+  position: absolute;
+  top: 300px; /* was 20px — decrease this more to move it up */
+  left: 50%;
+  transform: translateX(-50%);
+  color: red;
+  text-align: center;
+  font-family: sans-serif;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  z-index: 2;
+}
+
+
 header.masthead:before {
   content: "";
   position: absolute;
